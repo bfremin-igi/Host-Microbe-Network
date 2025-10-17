@@ -63,6 +63,7 @@
         .container {
             display: flex;
             height: calc(100vh - 120px);
+            overflow: hidden;
         }
         
         .sidebar {
@@ -155,11 +156,13 @@
             display: flex;
             flex-direction: column;
             background: white;
+            overflow: hidden;
         }
         
         #network {
             flex: 1;
             position: relative;
+            overflow: hidden;
         }
         
         .legend {
@@ -210,6 +213,8 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
         }
         
         .modal.active {
@@ -534,28 +539,31 @@
             const nodes = [];
             const links = [];
             
-            // Add selected node
+            // Add selected node (centered on left side)
+            const leftX = width * 0.3;
+            const rightX = width * 0.7;
+            
             nodes.push({
                 id: state.selectedNode,
                 type: state.currentTab === 'peptides' ? 'peptide' : 'receptor',
-                x: width * 0.25,
+                x: leftX,
                 y: height / 2
             });
             
-            // Add connected nodes
+            // Add connected nodes (centered on right side)
             const connectedNodes = state.currentTab === 'peptides' 
                 ? connections.map(c => c.receptor)
                 : connections.map(c => c.peptide);
             
             const uniqueConnected = [...new Set(connectedNodes)];
-            const spacing = Math.min(80, (height - 100) / uniqueConnected.length);
+            const spacing = Math.min(80, (height - 100) / Math.max(uniqueConnected.length, 1));
             const startY = (height - (uniqueConnected.length - 1) * spacing) / 2;
             
             uniqueConnected.forEach((node, i) => {
                 nodes.push({
                     id: node,
                     type: state.currentTab === 'peptides' ? 'receptor' : 'peptide',
-                    x: width * 0.75,
+                    x: rightX,
                     y: startY + i * spacing
                 });
                 
