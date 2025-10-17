@@ -751,7 +751,7 @@
             
             residuesContent.innerHTML = `
                 <strong>Connections at iPTM ≥ ${state.iptmThreshold.toFixed(2)}:</strong><br><br>
-                ${connections.map(c => `${c.peptide} (iPTM: ${c.iptm.toFixed(3)})`).join('<br>')}
+                ${connections.map(c => `${c.peptide} (iPTM: ${c.iptm.toFixed(3)}, pLDDT: ${c.plddt.toFixed(1)})`).join('<br>')}
             `;
         }
         
