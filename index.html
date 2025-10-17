@@ -461,7 +461,7 @@
             }
         }
         
-        // Update item list
+        // Update item list with enhanced search
         function updateItemList() {
             const listContainer = document.getElementById('itemList');
             const items = state.currentTab === 'peptides' ? Array.from(data.peptides) : Array.from(data.receptors);
@@ -506,7 +506,7 @@
             drawNetwork();
         }
         
-        // Draw network
+        // Draw network with better centering
         function drawNetwork() {
             const container = document.getElementById('network');
             container.querySelector('svg')?.remove();
@@ -539,7 +539,7 @@
             const nodes = [];
             const links = [];
             
-            // Add selected node (centered on left side)
+            // Better centering - left at 30%, right at 70%
             const leftX = width * 0.3;
             const rightX = width * 0.7;
             
@@ -550,7 +550,7 @@
                 y: height / 2
             });
             
-            // Add connected nodes (centered on right side)
+            // Add connected nodes
             const connectedNodes = state.currentTab === 'peptides' 
                 ? connections.map(c => c.receptor)
                 : connections.map(c => c.peptide);
@@ -597,7 +597,7 @@
                 .style('cursor', 'pointer')
                 .on('click', (event, d) => showDetails(d.interaction));
             
-            // Draw nodes
+            // Draw nodes with click handlers
             const nodeGroups = svg.selectAll('g')
                 .data(nodes)
                 .enter()
@@ -612,7 +612,8 @@
                         .attr('r', 15)
                         .attr('fill', colors.peptide)
                         .attr('stroke', '#fff')
-                        .attr('stroke-width', 2);
+                        .attr('stroke-width', 2)
+                        .style('cursor', 'pointer');
                 } else {
                     const metadata = data.receptorMetadata[d.id] || {};
                     const color = colors[metadata.therapeuticInterest] || colors.No;
@@ -623,7 +624,9 @@
                             .attr('r', 15)
                             .attr('fill', color)
                             .attr('stroke', '#fff')
-                            .attr('stroke-width', 2);
+                            .attr('stroke-width', 2)
+                            .style('cursor', 'pointer')
+                            .on('click', () => showReceptorMetadata(d.id));
                     } else if (gpcrClass === 'B1') {
                         g.append('rect')
                             .attr('x', -15)
@@ -632,13 +635,17 @@
                             .attr('height', 30)
                             .attr('fill', color)
                             .attr('stroke', '#fff')
-                            .attr('stroke-width', 2);
+                            .attr('stroke-width', 2)
+                            .style('cursor', 'pointer')
+                            .on('click', () => showReceptorMetadata(d.id));
                     } else {
                         g.append('polygon')
                             .attr('points', '0,-17 15,17 -15,17')
                             .attr('fill', color)
                             .attr('stroke', '#fff')
-                            .attr('stroke-width', 2);
+                            .attr('stroke-width', 2)
+                            .style('cursor', 'pointer')
+                            .on('click', () => showReceptorMetadata(d.id));
                     }
                 }
                 
@@ -651,14 +658,18 @@
             });
         }
         
-        // Show details modal
+        // Show interaction details modal with PDB
         async function showDetails(interaction) {
             const modal = document.getElementById('detailModal');
             const title = document.getElementById('modalTitle');
             const residuesContent = document.getElementById('residuesContent');
+            const viewerDiv = document.getElementById('viewer');
             
             title.textContent = `${interaction.peptide} ↔ ${interaction.receptor}`;
             modal.classList.add('active');
+            
+            // Clear previous viewer
+            viewerDiv.innerHTML = '';
             
             // Load PDB
             const viewer = $3Dmol.createViewer('viewer', {
@@ -674,7 +685,7 @@
                 viewer.render();
             } catch (error) {
                 console.error('Error loading PDB:', error);
-                document.getElementById('viewer').innerHTML = '<div class="error">Error loading PDB file</div>';
+                viewerDiv.innerHTML = '<div class="error">Error loading PDB file</div>';
             }
             
             // Load residues
@@ -686,6 +697,42 @@
                 console.error('Error loading residues:', error);
                 residuesContent.textContent = 'Error loading residues file';
             }
+        }
+        
+        // Show receptor metadata modal
+        function showReceptorMetadata(receptorId) {
+            const metadata = data.receptorMetadata[receptorId];
+            if (!metadata) return;
+            
+            const modal = document.getElementById('detailModal');
+            const title = document.getElementById('modalTitle');
+            const viewerDiv = document.getElementById('viewer');
+            const residuesContent = document.getElementById('residuesContent');
+            
+            title.textContent = `Receptor: ${receptorId}`;
+            modal.classList.add('active');
+            
+            // Show metadata instead of PDB
+            viewerDiv.innerHTML = `
+                <div style="padding: 20px; background: #f8f8f8; border-radius: 8px;">
+                    <h3 style="margin-bottom: 15px; color: #667eea;">Receptor Metadata</h3>
+                    <div style="display: grid; gap: 10px;">
+                        <div><strong>Receptor:</strong> ${receptorId}</div>
+                        <div><strong>GPCR Class:</strong> ${metadata.class || 'Unknown'}</div>
+                        <div><strong>Therapeutic Interest:</strong> ${metadata.therapeuticInterest || 'Unknown'}</div>
+                        <div><strong>Notes:</strong> ${metadata.notes || 'No notes available'}</div>
+                    </div>
+                </div>
+            `;
+            
+            // Show connection info
+            const connections = data.interactions.filter(i => 
+                i.receptor === receptorId && i.iptm >= state.iptmThreshold
+            );
+            residuesContent.innerHTML = `
+                <strong>Connections at iPTM ≥ ${state.iptmThreshold.toFixed(2)}:</strong><br><br>
+                ${connections.map(c => `${c.peptide} (iPTM: ${c.iptm.toFixed(3)})`).join('<br>')}
+            `;
         }
         
         function closeModal() {
