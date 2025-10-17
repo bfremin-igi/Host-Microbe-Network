@@ -1,0 +1,359 @@
+Receptor	GPCR_Class	Therapeutic_Interest	Notes
+ACKR1	A	Maybe	Atypical chemokine receptor, scavenges chemokines; malaria resistance
+ACKR2	A	Maybe	Atypical chemokine receptor, inflammatory resolution
+ACKR3	A	Yes	Cancer, CXCL12 scavenger; drug development ongoing
+ACKR4	A	Maybe	Atypical CCL chemokine scavenger
+ADCYAP1R1	B1	Yes	PAC1 receptor; PTSD, stress disorders
+ADGRA1	B2	No	GPR123; unknown function
+ADGRA2	B2	Yes	GPR124; blood-brain barrier, angiogenesis
+ADGRA3	B2	Yes	GPR125; megakaryocyte development
+ADGRB1	B2	Yes	BAI1; angiogenesis, cancer
+ADGRB2	B2	Yes	BAI2; synaptogenesis
+ADGRB3	B2	Yes	BAI3; synaptogenesis, C1q binding
+ADGRD1	B2	Yes	GPR133; osteoblast function
+ADGRD2	B2	No	GPR144; unknown function
+ADGRE1	B2	Yes	EMR1/F4/80; macrophage marker
+ADGRE2	B2	Yes	EMR2; immune function
+ADGRE3	B2	Yes	EMR3; myeloid cells
+ADGRE4P	B2	No	Pseudogene
+ADGRE5	B2	Yes	CD97; immune cell migration
+ADGRF1	B2	Yes	GPR110; lung surfactant
+ADGRF2	B2	No	GPR111; unknown function
+ADGRF3	B2	No	GPR113; unknown function
+ADGRF4	B2	Yes	GPR115; glucose homeostasis
+ADGRF5	B2	Yes	GPR116; lung surfactant, hair cell development
+ADGRG1	B2	Yes	GPR56; brain development, cancer
+ADGRG2	B2	Yes	GPR64; male fertility, epididymis
+ADGRG3	B2	Yes	GPR97; lymphocyte trafficking
+ADGRG4	B2	No	GPR112; unknown function
+ADGRG5	B2	Yes	GPR114; granulocyte function
+ADGRG6	B2	Yes	GPR126; myelination, ear development
+ADGRG7	B2	No	GPR128; unknown function
+ADGRL1	B2	Yes	LPHN1; synapse formation, ADHD
+ADGRL2	B2	Yes	LPHN2; glucose homeostasis
+ADGRL3	B2	Yes	LPHN3; ADHD susceptibility
+ADGRL4	B2	Yes	ELTD1; angiogenesis
+ADORA1	A	Yes	Adenosine A1; cardiac protection, epilepsy
+ADORA2A	A	Yes	Adenosine A2A; Parkinson's disease - istradefylline approved; cancer immunotherapy
+ADORA2B	A	Yes	Adenosine A2B; inflammation, asthma
+ADORA3	A	Yes	Adenosine A3; cancer, inflammation
+ADRA1A	A	Yes	Alpha-1A adrenergic; hypertension, BPH - multiple drugs approved
+ADRA1B	A	Yes	Alpha-1B adrenergic; hypertension, BPH
+ADRA1D	A	Yes	Alpha-1D adrenergic; hypertension, BPH
+ADRA2A	A	Yes	Alpha-2A adrenergic; hypertension, ADHD - clonidine, guanfacine approved
+ADRA2B	A	Yes	Alpha-2B adrenergic; hypertension
+ADRA2C	A	Yes	Alpha-2C adrenergic; hypertension
+ADRB1	A	Yes	Beta-1 adrenergic; heart failure, hypertension - beta blockers approved
+ADRB2	A	Yes	Beta-2 adrenergic; asthma, COPD - albuterol, salmeterol approved
+ADRB3	A	Yes	Beta-3 adrenergic; obesity, overactive bladder - mirabegron approved
+AGTR1	A	Yes	Angiotensin II type 1; hypertension, heart failure - ARBs (losartan) approved
+AGTR2	A	Yes	Angiotensin II type 2; neuroprotection, wound healing
+APLNR	A	Yes	Apelin receptor; heart failure, pulmonary hypertension
+AVPR1A	A	Yes	Vasopressin V1a; hyponatremia
+AVPR1B	A	Yes	Vasopressin V1b; Cushing's syndrome, depression
+AVPR2	A	Yes	Vasopressin V2; hyponatremia, diabetes insipidus - tolvaptan approved
+BDKRB1	A	Yes	Bradykinin B1; pain, inflammation
+BDKRB2	A	Yes	Bradykinin B2; ACE inhibitor side effects (cough, angioedema)
+BRS3	A	Yes	Bombesin receptor 3; obesity, diabetes
+C3AR1	A	Yes	Complement C3a receptor; sepsis, AMD (macular degeneration)
+C5AR1	A	Yes	Complement C5a receptor; sepsis, AMD - avacopan approved 2021
+C5AR2	A	Yes	Complement C5a receptor 2; inflammation modulation
+CALCR	A	Yes	Calcitonin receptor; osteoporosis, hypercalcemia - calcitonin approved
+CALCRL	A	Yes	Calcitonin receptor-like (CLR); migraine, pulmonary hypertension - CGRP antagonists approved
+CASR	C	Yes	Calcium-sensing receptor; hyperparathyroidism, hypercalcemia - cinacalcet approved
+CCKAR	A	Yes	Cholecystokinin A receptor; obesity, gallbladder
+CCKBR	A	Yes	Cholecystokinin B receptor; anxiety, IBS
+CCR1	A	Yes	C-C chemokine receptor 1; inflammation, MS trials
+CCR10	A	Maybe	C-C chemokine receptor 10; skin immunity
+CCR2	A	Yes	C-C chemokine receptor 2; cancer, diabetes, atherosclerosis
+CCR3	A	Yes	C-C chemokine receptor 3; asthma, allergies
+CCR4	A	Yes	C-C chemokine receptor 4; cancer immunotherapy target
+CCR5	A	Yes	C-C chemokine receptor 5; HIV - maraviroc approved
+CCR6	A	Yes	C-C chemokine receptor 6; autoimmune diseases
+CCR7	A	Maybe	C-C chemokine receptor 7; cancer metastasis
+CCR8	A	Yes	C-C chemokine receptor 8; cancer immunotherapy
+CCR9	A	Yes	C-C chemokine receptor 9; IBD trials
+CCRL2	A	Maybe	C-C chemokine receptor-like 2; chemokine presenter
+CHRM1	A	Yes	Muscarinic M1; Alzheimer's, schizophrenia - xanomeline approved 2024
+CHRM2	A	Yes	Muscarinic M2; bradycardia, cognition
+CHRM3	A	Yes	Muscarinic M3; COPD, overactive bladder - tiotropium approved
+CHRM4	A	Yes	Muscarinic M4; Parkinson's, schizophrenia
+CHRM5	A	Yes	Muscarinic M5; CNS function
+CMKLR1	A	Yes	Chemerin receptor 1; metabolic disorders, inflammation
+CMKLR2	A	Maybe	GPR1; chemerin signaling
+CNR1	A	Yes	Cannabinoid receptor 1; pain, nausea, MS - dronabinol, nabilone approved
+CNR2	A	Yes	Cannabinoid receptor 2; inflammation, pain
+CRHR1	A	Yes	Corticotropin-releasing hormone receptor 1; depression, anxiety
+CRHR2	A	Yes	Corticotropin-releasing hormone receptor 2; anxiety, stress
+CX3CR1	A	Yes	C-X3-C chemokine receptor 1; atherosclerosis, neurodegeneration
+CXCR1	A	Yes	C-X-C chemokine receptor 1; cancer, inflammation
+CXCR2	A	Yes	C-X-C chemokine receptor 2; cancer, COPD
+CXCR3	A	Yes	C-X-C chemokine receptor 3; autoimmune, transplant rejection
+CXCR4	A	Yes	C-X-C chemokine receptor 4; cancer, HIV, stem cell - plerixafor approved
+CXCR5	A	Maybe	C-X-C chemokine receptor 5; B cell trafficking
+CXCR6	A	Maybe	C-X-C chemokine receptor 6; liver inflammation
+CYSLTR1	A	Yes	Cysteinyl leukotriene receptor 1; asthma - montelukast approved
+CYSLTR2	A	Yes	Cysteinyl leukotriene receptor 2; asthma, allergies
+DRD1	A	Yes	Dopamine D1 receptor; schizophrenia, Parkinson's
+DRD2	A	Yes	Dopamine D2 receptor; schizophrenia, Parkinson's - antipsychotics approved
+DRD3	A	Yes	Dopamine D3 receptor; schizophrenia
+DRD4	A	Yes	Dopamine D4 receptor; ADHD, schizophrenia
+DRD5	A	Yes	Dopamine D5 receptor; hypertension, cognition
+EDNRA	A	Yes	Endothelin receptor A; pulmonary hypertension - bosentan, ambrisentan approved
+EDNRB	A	Yes	Endothelin receptor B; pulmonary hypertension - bosentan approved
+F2R	A	Yes	Protease-activated receptor 1 (PAR1); thrombosis - vorapaxar approved
+F2RL1	A	Yes	Protease-activated receptor 2 (PAR2); pain, inflammation, GI disorders
+F2RL2	A	Maybe	Protease-activated receptor 3 (PAR3); thrombosis cofactor
+F2RL3	A	Yes	Protease-activated receptor 4 (PAR4); thrombosis
+FFAR1	A	Yes	Free fatty acid receptor 1 (GPR40); type 2 diabetes - TAK-875 failed trials
+FFAR2	A	Yes	Free fatty acid receptor 2 (GPR43); metabolism, inflammation
+FFAR3	A	Yes	Free fatty acid receptor 3 (GPR41); metabolism, gut hormones
+FFAR4	A	Yes	Free fatty acid receptor 4 (GPR120); obesity, inflammation
+FPR1	A	Yes	Formyl peptide receptor 1; bacterial infection, inflammation
+FPR2	A	Yes	Formyl peptide receptor 2; resolution of inflammation
+FPR3	A	Maybe	Formyl peptide receptor 3; inflammation
+FSHR	A-LRR	Yes	Follicle-stimulating hormone receptor; infertility - FSH therapy target
+FZD1	F	Yes	Frizzled-1; cancer, Wnt signaling
+FZD10	F	Yes	Frizzled-10; cancer
+FZD2	F	Yes	Frizzled-2; cancer, bone development
+FZD3	F	Yes	Frizzled-3; cancer, neural development
+FZD4	F	Yes	Frizzled-4; retinal vascular disease
+FZD5	F	Yes	Frizzled-5; cancer, Wnt signaling
+FZD6	F	Yes	Frizzled-6; cancer, planar cell polarity
+FZD7	F	Yes	Frizzled-7; cancer, stem cells
+FZD8	F	Yes	Frizzled-8; cancer
+FZD9	F	Yes	Frizzled-9; cancer
+GABBR1	C	Yes	GABA-B receptor 1; spasticity - baclofen approved (requires GABBR2)
+GABBR2	C	Yes	GABA-B receptor 2; spasticity - baclofen approved (requires GABBR1)
+GALR1	A	Yes	Galanin receptor 1; depression, pain
+GALR2	A	Yes	Galanin receptor 2; depression, pain - preclinical development
+GALR3	A	Yes	Galanin receptor 3; depression, epilepsy
+GCGR	B1	Yes	Glucagon receptor; type 2 diabetes - under development
+GHRHR	B1	Yes	Growth hormone-releasing hormone receptor; growth hormone deficiency
+GHSR	A	Yes	Growth hormone secretagogue receptor; cachexia, appetite
+GIPR	B1	Yes	Glucose-dependent insulinotropic polypeptide receptor; type 2 diabetes/obesity - tirzepatide approved
+GLP1R	B1	Yes	Glucagon-like peptide-1 receptor; type 2 diabetes/obesity - semaglutide, liraglutide approved
+GLP2R	B1	Yes	Glucagon-like peptide-2 receptor; short bowel syndrome - teduglutide approved
+GPBAR1	A	Yes	G protein-coupled bile acid receptor 1 (TGR5); bile acid sensing, diabetes
+GPER1	A	Yes	G protein-coupled estrogen receptor 1 (GPR30); cancer, cardiovascular
+GPR101	A	Yes	G protein-coupled receptor 101; acromegaly/gigantism
+GPR107	A	No	G protein-coupled receptor 107; intracellular
+GPR119	A	Yes	G protein-coupled receptor 119; type 2 diabetes, GLP-1 release
+GPR12	A	Maybe	G protein-coupled receptor 12; CNS development
+GPR132	A	Yes	G protein-coupled receptor 132 (G2A); oxidized lipid sensing, apoptosis
+GPR135	A	No	G protein-coupled receptor 135; unknown function
+GPR137	A	No	G protein-coupled receptor 137; intracellular
+GPR139	A	Yes	G protein-coupled receptor 139; schizophrenia, aromatic amino acids
+GPR141	A	No	G protein-coupled receptor 141; unknown function
+GPR142	A	Yes	G protein-coupled receptor 142; type 2 diabetes, tryptophan
+GPR143	A	Yes	G protein-coupled receptor 143; ocular albinism (intracellular)
+GPR146	A	No	G protein-coupled receptor 146; unknown function
+GPR148	A	No	G protein-coupled receptor 148; unknown function
+GPR149	A	No	G protein-coupled receptor 149; unknown function
+GPR15	A	Yes	G protein-coupled receptor 15; IBD, T cell homing to colon
+GPR151	A	Yes	G protein-coupled receptor 151; pain, habenula
+GPR152	A	No	G protein-coupled receptor 152; unknown function
+GPR153	A	No	G protein-coupled receptor 153; unknown function
+GPR156	A	Maybe	G protein-coupled receptor 156; hearing
+GPR157	A	No	G protein-coupled receptor 157; CNS
+GPR158	A	Yes	G protein-coupled receptor 158; depression, mGluR-like
+GPR160	A	No	G protein-coupled receptor 160; unknown function
+GPR161	A	Yes	G protein-coupled receptor 161; hedgehog signaling, neural tube
+GPR162	A	No	G protein-coupled receptor 162; unknown function
+GPR17	A	Yes	G protein-coupled receptor 17; myelination, CNS injury
+GPR171	A	Yes	G protein-coupled receptor 171 (BigLEN); feeding, pain
+GPR173	A	Yes	G protein-coupled receptor 173 (SREB2); phoenixin receptor
+GPR174	A	Yes	G protein-coupled receptor 174; immune regulation
+GPR176	A	Yes	G protein-coupled receptor 176; blood pressure, cardiac
+GPR18	A	Yes	G protein-coupled receptor 18; cannabinoid-related, inflammation
+GPR182	A	No	G protein-coupled receptor 182; unknown function
+GPR183	A	Yes	G protein-coupled receptor 183 (EBI2); B cell positioning, oxysterols
+GPR19	A	Yes	G protein-coupled receptor 19; adipogenesis
+GPR20	A	No	G protein-coupled receptor 20; unknown function
+GPR21	A	No	G protein-coupled receptor 21; unknown function
+GPR22	A	No	G protein-coupled receptor 22; unknown function
+GPR25	A	No	G protein-coupled receptor 25; unknown function
+GPR26	A	No	G protein-coupled receptor 26; CNS
+GPR27	A	No	G protein-coupled receptor 27; CNS
+GPR3	A	Yes	G protein-coupled receptor 3; Alzheimer's, oocyte maturation
+GPR31	A	Yes	G protein-coupled receptor 31; 12S-HETE receptor
+GPR32	A	Yes	G protein-coupled receptor 32; resolvin receptor (anti-inflammatory)
+GPR33	A	No	G protein-coupled receptor 33; unknown function
+GPR34	A	Yes	G protein-coupled receptor 34; lysophosphatidylserine receptor
+GPR35	A	Yes	G protein-coupled receptor 35; IBD, pain
+GPR37	A	Yes	G protein-coupled receptor 37; Parkinson's disease
+GPR37L1	A	Maybe	G protein-coupled receptor 37-like 1; CNS
+GPR39	A	Yes	G protein-coupled receptor 39; zinc sensing, GI protection
+GPR4	A	Yes	G protein-coupled receptor 4; pH sensing, cancer
+GPR42	A	No	G protein-coupled receptor 42; pseudogene/inactive
+GPR45	A	No	G protein-coupled receptor 45; unknown function
+GPR50	A	Yes	G protein-coupled receptor 50; circadian, melatonin modulator
+GPR52	A	Yes	G protein-coupled receptor 52; schizophrenia, Parkinson's
+GPR55	A	Yes	G protein-coupled receptor 55; cannabinoid-related, bone, pain
+GPR6	A	Yes	G protein-coupled receptor 6; sphingosine signaling
+GPR61	A	Yes	G protein-coupled receptor 61; obesity, adipogenesis
+GPR62	A	No	G protein-coupled receptor 62; CNS
+GPR63	A	Yes	G protein-coupled receptor 63; PSA sensing (prostate)
+GPR65	A	Yes	G protein-coupled receptor 65; pH sensing, IBD
+GPR68	A	Yes	G protein-coupled receptor 68; pH sensing, cancer
+GPR75	A	Yes	G protein-coupled receptor 75; CCL5 receptor, obesity
+GPR78	A	No	G protein-coupled receptor 78; unknown function
+GPR82	A	No	G protein-coupled receptor 82; unknown function
+GPR83	A	Yes	G protein-coupled receptor 83; feeding, stress
+GPR84	A	Yes	G protein-coupled receptor 84; inflammation, medium-chain fatty acids
+GPR85	A	No	G protein-coupled receptor 85; CNS
+GPR87	A	Yes	G protein-coupled receptor 87; lysophosphatidic acid-like
+GPR88	A	Yes	G protein-coupled receptor 88; striatum, addiction
+GPRC5A	C	Yes	G protein-coupled receptor class C group 5 member A; lung cancer, retinoic acid
+GPRC5B	C	Yes	G protein-coupled receptor class C group 5 member B; obesity, metabolic
+GPRC5C	C	No	G protein-coupled receptor class C group 5 member C; unknown function
+GPRC5D	C	Yes	G protein-coupled receptor class C group 5 member D; multiple myeloma - CAR-T target
+GPRC6A	C	Yes	G protein-coupled receptor class C group 6 member A; amino acid/cation sensing, metabolism
+GRM1	C	Yes	Metabotropic glutamate receptor 1 (mGluR1); schizophrenia, pain
+GRM2	C	Yes	Metabotropic glutamate receptor 2 (mGluR2); schizophrenia, anxiety
+GRM3	C	Yes	Metabotropic glutamate receptor 3 (mGluR3); schizophrenia
+GRM4	C	Yes	Metabotropic glutamate receptor 4 (mGluR4); Parkinson's disease
+GRM5	C	Yes	Metabotropic glutamate receptor 5 (mGluR5); Fragile X syndrome - multiple trials
+GRM6	C	Maybe	Metabotropic glutamate receptor 6 (mGluR6); vision (ON bipolar cells)
+GRM7	C	Yes	Metabotropic glutamate receptor 7 (mGluR7); anxiety, autism
+GRM8	C	Yes	Metabotropic glutamate receptor 8 (mGluR8); anxiety
+GRPR	A	Yes	Gastrin-releasing peptide receptor; cancer imaging/therapy
+HCAR1	A	Yes	Hydroxycarboxylic acid receptor 1 (GPR81); lactate sensing, inflammation
+HCAR2	A	Yes	Hydroxycarboxylic acid receptor 2 (GPR109A); dyslipidemia - niacin target
+HCAR3	A	Yes	Hydroxycarboxylic acid receptor 3 (GPR109B); metabolic signaling
+HCRTR1	A	Yes	Hypocretin receptor 1 (orexin OX1R); insomnia - dual antagonists approved
+HCRTR2	A	Yes	Hypocretin receptor 2 (orexin OX2R); insomnia - suvorexant, lemborexant approved
+HRH1	A	Yes	Histamine H1 receptor; allergies - antihistamines approved
+HRH2	A	Yes	Histamine H2 receptor; GERD - famotidine approved
+HRH3	A	Yes	Histamine H3 receptor; sleep disorders, cognition - pitolisant approved
+HRH4	A	Yes	Histamine H4 receptor; inflammation, pruritus
+HTR1A	A	Yes	5-HT1A receptor; depression, anxiety - buspirone approved
+HTR1B	A	Yes	5-HT1B receptor; migraine - triptans approved
+HTR1D	A	Yes	5-HT1D receptor; migraine - triptans approved
+HTR1E	A	Yes	5-HT1E receptor; migraine research
+HTR1F	A	Yes	5-HT1F receptor; migraine - lasmiditan approved 2019
+HTR2A	A	Yes	5-HT2A receptor; schizophrenia, depression - atypical antipsychotics approved
+HTR2B	A	Yes	5-HT2B receptor; cardiac fibrosis (avoid agonism)
+HTR2C	A	Yes	5-HT2C receptor; obesity - lorcaserin withdrawn 2020
+HTR4	A	Yes	5-HT4 receptor; IBS, cognition
+HTR5A	A	Maybe	5-HT5A receptor; CNS disorders
+HTR6	A	Yes	5-HT6 receptor; Alzheimer's, cognition
+HTR7	A	Yes	5-HT7 receptor; depression, circadian disorders
+KISS1R	A	Yes	Kisspeptin receptor (GPR54); reproduction, cancer
+LGR4	A-LRR	Yes	Leucine-rich repeat-containing GPCR 4; development, cancer
+LGR5	A-LRR	Yes	Leucine-rich repeat-containing GPCR 5; stem cell marker, cancer
+LGR6	A-LRR	Yes	Leucine-rich repeat-containing GPCR 6; stem cells
+LHCGR	A-LRR	Yes	Luteinizing hormone/choriogonadotropin receptor; infertility - LH/hCG therapy target
+LPAR1	A	Yes	Lysophosphatidic acid receptor 1; cancer, fibrosis
+LPAR2	A	Yes	Lysophosphatidic acid receptor 2; cancer, fibrosis
+LPAR3	A	Yes	Lysophosphatidic acid receptor 3; reproduction, cancer
+LPAR4	A	Yes	Lysophosphatidic acid receptor 4; vascular development
+LPAR5	A	Yes	Lysophosphatidic acid receptor 5; pain
+LPAR6	A	Yes	Lysophosphatidic acid receptor 6; hair growth
+LTB4R	A	Yes	Leukotriene B4 receptor; inflammation
+LTB4R2	A	Yes	Leukotriene B4 receptor 2; inflammation
+MAS1	A	Yes	MAS1 proto-oncogene; cardiovascular protection
+MAS1L	A	Maybe	MAS1-like; angiotensin signaling
+MC1R	A	Yes	Melanocortin 1 receptor; skin pigmentation, melanoma
+MC2R	A	Yes	Melanocortin 2 receptor; adrenal insufficiency (ACTH target)
+MC3R	A	Yes	Melanocortin 3 receptor; energy homeostasis
+MC4R	A	Yes	Melanocortin 4 receptor; obesity - setmelanotide approved 2020
+MC5R	A	Yes	Melanocortin 5 receptor; exocrine function
+MCHR1	A	Yes	Melanin-concentrating hormone receptor 1; obesity, depression
+MCHR2	A	Yes	Melanin-concentrating hormone receptor 2; obesity (non-functional in humans)
+MLNR	A	Yes	Motilin receptor; GI motility - erythromycin agonism
+MRGPRD	A	Yes	MAS-related GPR member D; pain
+MRGPRE	A	Maybe	MAS-related GPR member E; sensory
+MRGPRF	A	Maybe	MAS-related GPR member F; sensory
+MRGPRX1	A	Yes	MAS-related GPR member X1; pain, pruritus
+MRGPRX2	A	Yes	MAS-related GPR member X2; mast cell degranulation, drug allergy
+MRGPRX3	A	Maybe	MAS-related GPR member X3; pain
+MRGPRX4	A	Yes	MAS-related GPR member X4; bile acid sensing
+MTNR1A	A	Yes	Melatonin receptor 1A; insomnia, circadian - ramelteon, tasimelteon approved
+MTNR1B	A	Yes	Melatonin receptor 1B; insomnia, circadian
+NMBR	A	Yes	Neuromedin B receptor; cancer
+NMUR1	A	Yes	Neuromedin U receptor 1; obesity, GI disorders
+NMUR2	A	Yes	Neuromedin U receptor 2; obesity, feeding
+NPBWR1	A	Yes	Neuropeptide B/W receptor 1; pain, feeding
+NPBWR2	A	Yes	Neuropeptide B/W receptor 2; pain, feeding
+NPFFR1	A	Yes	Neuropeptide FF receptor 1; pain modulation
+NPFFR2	A	Yes	Neuropeptide FF receptor 2; pain, opioid tolerance
+NPSR1	A	Yes	Neuropeptide S receptor 1; asthma, anxiety
+NPY1R	A	Yes	Neuropeptide Y receptor Y1; obesity, anxiety
+NPY2R	A	Yes	Neuropeptide Y receptor Y2; obesity, bone metabolism
+NPY4R	A	Yes	Neuropeptide Y receptor Y4; satiety
+NPY5R	A	Yes	Neuropeptide Y receptor Y5; obesity
+NPY6R	A	No	Neuropeptide Y receptor Y6; unknown (pseudogene in humans)
+NTSR1	A	Yes	Neurotensin receptor 1; schizophrenia, pain, cancer
+NTSR2	A	Yes	Neurotensin receptor 2; pain
+OPRD1	A	Yes	Opioid receptor delta; pain, depression
+OPRK1	A	Yes	Opioid receptor kappa; pain
+OPRL1	A	Yes	Opioid receptor-like 1 (nociceptin); pain, anxiety
+OPRM1	A	Yes	Opioid receptor mu; pain - morphine, fentanyl, naloxone approved
+OXER1	A	Yes	Oxoeicosanoid receptor 1; inflammation, cancer
+OXGR1	A	Yes	Oxoglutarate receptor 1; metabolic signaling
+OXTR	A	Yes	Oxytocin receptor; labor induction - oxytocin, atosiban approved
+P2RY1	A	Yes	P2Y purinoceptor 1; thrombosis
+P2RY10	A	Maybe	P2Y purinoceptor 10; lipid sensing
+P2RY11	A	Yes	P2Y purinoceptor 11; immune modulation
+P2RY12	A	Yes	P2Y purinoceptor 12; thrombosis - clopidogrel, ticagrelor approved
+P2RY13	A	Yes	P2Y purinoceptor 13; HDL metabolism
+P2RY14	A	Yes	P2Y purinoceptor 14; immune cell migration
+P2RY2	A	Yes	P2Y purinoceptor 2; dry eye, cystic fibrosis
+P2RY4	A	Yes	P2Y purinoceptor 4; inflammation
+P2RY6	A	Yes	P2Y purinoceptor 6; inflammation
+P2RY8	A	Maybe	P2Y purinoceptor 8; B cell development
+PRLHR	A	Yes	Prolactin-releasing hormone receptor (GPR10); feeding, stress
+PROKR1	A	Yes	Prokineticin receptor 1; pain, circadian rhythms
+PROKR2	A	Yes	Prokineticin receptor 2; Kallmann syndrome
+PTAFR	A	Yes	Platelet-activating factor receptor; inflammation, asthma
+PTGDR	A	Yes	Prostaglandin D2 receptor; allergic disease
+PTGDR2	A	Yes	Prostaglandin D2 receptor 2 (DP2/CRTH2); asthma
+PTGER1	A	Yes	Prostaglandin E2 receptor EP1; pain, inflammation
+PTGER2	A	Yes	Prostaglandin E2 receptor EP2; glaucoma, inflammation
+PTGER3	A	Yes	Prostaglandin E2 receptor EP3; gastric protection
+PTGER4	A	Yes	Prostaglandin E2 receptor EP4; IBD - misoprostol effects
+PTGFR	A	Yes	Prostaglandin F2α receptor; glaucoma, labor induction - latanoprost approved
+PTGIR	A	Yes	Prostaglandin I2 receptor; pulmonary hypertension - epoprostenol approved
+PTH1R	B1	Yes	Parathyroid hormone receptor 1; osteoporosis, hypoparathyroidism - teriparatide approved
+PTH2R	B1	Maybe	Parathyroid hormone receptor 2; CNS function
+QRFPR	A	Yes	Pyroglutamylated RFamide peptide receptor (GPR103); feeding, bone metabolism
+RXFP1	A-LRR	Yes	Relaxin family peptide receptor 1 (LGR7); reproduction, cardiovascular
+RXFP2	A-LRR	Yes	Relaxin family peptide receptor 2 (LGR8); male reproduction, cryptorchidism
+RXFP3	A-LRR	Yes	Relaxin family peptide receptor 3; stress, feeding
+RXFP4	A-LRR	Yes	Relaxin family peptide receptor 4; reproduction, metabolism
+S1PR1	A	Yes	Sphingosine-1-phosphate receptor 1; multiple sclerosis - fingolimod, siponimod approved
+S1PR2	A	Yes	Sphingosine-1-phosphate receptor 2; vascular function
+S1PR3	A	Yes	Sphingosine-1-phosphate receptor 3; cardiovascular
+S1PR4	A	Yes	Sphingosine-1-phosphate receptor 4; immune modulation
+S1PR5	A	Yes	Sphingosine-1-phosphate receptor 5; oligodendrocyte function
+SCTR	B1	Yes	Secretin receptor; pancreatic function
+SMO	F	Yes	Smoothened; basal cell carcinoma - vismodegib, sonidegib approved
+SSTR1	A	Yes	Somatostatin receptor 1; neuroendocrine tumors
+SSTR2	A	Yes	Somatostatin receptor 2; acromegaly, neuroendocrine tumors - octreotide approved
+SSTR3	A	Yes	Somatostatin receptor 3; neuroendocrine tumors
+SSTR4	A	Yes	Somatostatin receptor 4; neuroendocrine tumors
+SSTR5	A	Yes	Somatostatin receptor 5; acromegaly, neuroendocrine tumors - pasireotide approved
+SUCNR1	A	Yes	Succinate receptor 1 (GPR91); hypertension, metabolic disease
+TAAR1	A	Yes	Trace amine-associated receptor 1; schizophrenia - ulotaront in Phase 3 trials
+TAAR2	A	Maybe	Trace amine-associated receptor 2; olfaction
+TAAR3P	A	No	Trace amine-associated receptor 3; pseudogene
+TAAR5	A	Maybe	Trace amine-associated receptor 5; olfaction
+TAAR6	A	Maybe	Trace amine-associated receptor 6; olfaction
+TAAR8	A	Maybe	Trace amine-associated receptor 8; olfaction
+TAAR9	A	Maybe	Trace amine-associated receptor 9; olfaction
+TACR1	A	Yes	Tachykinin receptor 1 (NK1); nausea/vomiting - aprepitant, rolapitant approved
+TACR2	A	Yes	Tachykinin receptor 2 (NK2); respiratory disorders
+TACR3	A	Yes	Tachykinin receptor 3 (NK3); menopausal hot flashes - fezolinetant approved 2023
+TBXA2R	A	Yes	Thromboxane A2 receptor; platelet aggregation (aspirin targets upstream enzyme)
+TPRA1	A	No	Transmembrane prolyl 4-hydroxylase; not a true GPCR
+TRHR	A	Yes	Thyrotropin-releasing hormone receptor; thyroid function, CNS
+TSHR	A-LRR	Yes	Thyroid-stimulating hormone receptor; hypothyroidism, Graves' disease - TSH target
+UTS2R	A	Yes	Urotensin-2 receptor; cardiovascular (failed trials)
+VIPR1	B1	Yes	Vasoactive intestinal peptide receptor 1 (VPAC1); inflammation, circadian
+VIPR2	B1	Yes	Vasoactive intestinal peptide receptor 2 (VPAC2); circadian, inflammation
+XCR1	A	Maybe	X-C motif chemokine receptor 1; dendritic cell biology
+			
+			
+			
+			
