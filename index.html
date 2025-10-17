@@ -461,9 +461,22 @@
             const listContainer = document.getElementById('itemList');
             const items = state.currentTab === 'peptides' ? Array.from(data.peptides) : Array.from(data.receptors);
             
-            const filtered = items.filter(item => 
-                item.toLowerCase().includes(state.searchQuery.toLowerCase())
-            );
+            const filtered = items.filter(item => {
+                const query = state.searchQuery.toLowerCase();
+                // Search by name
+                if (item.toLowerCase().includes(query)) return true;
+                
+                // For receptors, also search metadata
+                if (state.currentTab === 'receptors') {
+                    const metadata = data.receptorMetadata[item];
+                    if (metadata) {
+                        if (metadata.class?.toLowerCase().includes(query)) return true;
+                        if (metadata.therapeuticInterest?.toLowerCase().includes(query)) return true;
+                        if (metadata.notes?.toLowerCase().includes(query)) return true;
+                    }
+                }
+                return false;
+            });
             
             const itemsWithCounts = filtered.map(item => {
                 const connections = data.interactions.filter(i => 
