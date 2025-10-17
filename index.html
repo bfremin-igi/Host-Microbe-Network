@@ -679,8 +679,21 @@
             try {
                 const pdbRes = await fetch(`PDBs/${interaction.name}.pdb`);
                 const pdbText = await pdbRes.text();
-                viewer.addModel(pdbText, 'pdb');
-                viewer.setStyle({}, {cartoon: {color: 'spectrum'}});
+                const model = viewer.addModel(pdbText, 'pdb');
+                
+                // Get all chains in the model
+                const atoms = model.selectedAtoms({});
+                const chains = [...new Set(atoms.map(a => a.chain))];
+                
+                // Color first chain blue, second chain green
+                if (chains.length >= 2) {
+                    viewer.setStyle({chain: chains[0]}, {cartoon: {color: '#2196F3'}});
+                    viewer.setStyle({chain: chains[1]}, {cartoon: {color: '#4CAF50'}});
+                } else {
+                    // Fallback to single color if only one chain
+                    viewer.setStyle({}, {cartoon: {color: '#2196F3'}});
+                }
+                
                 viewer.zoomTo();
                 viewer.render();
             } catch (error) {
@@ -692,6 +705,9 @@
             try {
                 const residuesRes = await fetch(`residues/${interaction.name}.txt`);
                 const residuesText = await residuesRes.text();
+                
+                // Reset the section title for interaction view
+                document.querySelector('.residues-section h3').textContent = 'Targeted Residues';
                 residuesContent.textContent = residuesText;
             } catch (error) {
                 console.error('Error loading residues:', error);
