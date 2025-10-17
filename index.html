@@ -729,6 +729,10 @@
             const connections = data.interactions.filter(i => 
                 i.receptor === receptorId && i.iptm >= state.iptmThreshold
             );
+            
+            // Change the section title
+            document.querySelector('.residues-section h3').textContent = 'Peptides Bound';
+            
             residuesContent.innerHTML = `
                 <strong>Connections at iPTM ≥ ${state.iptmThreshold.toFixed(2)}:</strong><br><br>
                 ${connections.map(c => `${c.peptide} (iPTM: ${c.iptm.toFixed(3)})`).join('<br>')}
