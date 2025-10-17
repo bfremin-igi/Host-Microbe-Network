@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protein-Receptor Network</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.0.1/3Dmol-min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+        
+        .slider-container label {
+            font-weight: 500;
+        }
+        
+        #iptmSlider {
+            width: 200px;
+        }
+        
+        #iptmValue {
+            font-weight: bold;
+            min-width: 40px;
+        }
+        
+        .container {
+            display: flex;
+            height: calc(100vh - 120px);
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: white;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8f8f8;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background: #e8e8e8;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .search-box {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .item-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f8f8;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        
+        .item:hover {
+            background: #e8e8e8;
+            transform: translateX(3px);
+        }
+        
+        .item.selected {
+            background: #e8f0fe;
+            border-left-color: #667eea;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+        
+        .item-meta {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+        
+        #network {
+            flex: 1;
+            position: relative;
+        }
+        
+        .legend {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 12px;
+        }
+        
+        .legend h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .legend-section {
+            margin-bottom: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .legend-shape {
+            margin-right: 8px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h2 {
+            font-size: 18px;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        #viewer {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .residues-section h3 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+        
+        .residues-content {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        
+        .error {
+            color: #d32f2f;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Protein-Receptor Interaction Network</h1>
+        <div class="controls">
+            <div class="slider-container">
+                <label for="iptmSlider">iPTM Threshold:</label>
+                <input type="range" id="iptmSlider" min="0" max="1" step="0.01" value="0.5">
+                <span id="iptmValue">0.50</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="sidebar">
+            <div class="tabs">
+                <button class="tab active" data-tab="peptides">By Peptide</button>
+                <button class="tab" data-tab="receptors">By Receptor</button>
+            </div>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search...">
+            </div>
+            <div class="item-list" id="itemList"></div>
+        </div>
+        
+        <div class="main-content">
+            <div id="network">
+                <div class="legend">
+                    <h3>Legend</h3>
+                    <div class="legend-section">
+                        <strong>Therapeutic Interest:</strong>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #4caf50;"></div>
+                            <span>Yes</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #ff9800;"></div>
+                            <span>Maybe</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #9e9e9e;"></div>
+                            <span>No</span>
+                        </div>
+                    </div>
+                    <div class="legend-section">
+                        <strong>GPCR Class:</strong>
+                        <div class="legend-item">
+                            <svg width="20" height="20" class="legend-shape">
+                                <circle cx="10" cy="10" r="8" fill="#666" />
+                            </svg>
+                            <span>A</span>
+                        </div>
+                        <div class="legend-item">
+                            <svg width="20" height="20" class="legend-shape">
+                                <rect x="2" y="2" width="16" height="16" fill="#666" />
+                            </svg>
+                            <span>B1</span>
+                        </div>
+                        <div class="legend-item">
+                            <svg width="20" height="20" class="legend-shape">
+                                <polygon points="10,2 18,18 2,18" fill="#666" />
+                            </svg>
+                            <span>B2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Interaction Details</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="viewer"></div>
+                <div class="residues-section">
+                    <h3>Targeted Residues</h3>
+                    <div class="residues-content" id="residuesContent">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let data = {
+            interactions: [],
+            receptorMetadata: {},
+            peptides: new Set(),
+            receptors: new Set()
+        };
+        
+        let state = {
+            currentTab: 'peptides',
+            selectedNode: null,
+            iptmThreshold: 0.5,
+            searchQuery: ''
+        };
+        
+        const colors = {
+            Yes: '#4caf50',
+            Maybe: '#ff9800',
+            No: '#9e9e9e',
+            peptide: '#667eea'
+        };
+        
+        // Load data
+        async function loadData() {
+            try {
+                // Load receptor metadata
+                const metadataRes = await fetch('receptor_metadata.txt');
+                const metadataText = await metadataRes.text();
+                const metadataLines = metadataText.split('\n').slice(1); // Skip header
+                
+                metadataLines.forEach(line => {
+                    const parts = line.trim().split('\t');
+                    if (parts.length >= 3) {
+                        data.receptorMetadata[parts[0]] = {
+                            class: parts[1],
+                            therapeuticInterest: parts[2],
+                            notes: parts[3] || ''
+                        };
+                        data.receptors.add(parts[0]);
+                    }
+                });
+                
+                // Load interactions
+                const interactionsRes = await fetch('Name_plddt_iptm.txt');
+                const interactionsText = await interactionsRes.text();
+                const interactionLines = interactionsText.split('\n');
+                
+                interactionLines.forEach(line => {
+                    const parts = line.trim().split(/\s+/);
+                    if (parts.length >= 3) {
+                        const name = parts[0];
+                        const [peptide, receptor] = name.split('_and_');
+                        if (peptide && receptor) {
+                            data.interactions.push({
+                                name: name,
+                                peptide: peptide,
+                                receptor: receptor,
+                                plddt: parseFloat(parts[1]),
+                                iptm: parseFloat(parts[2])
+                            });
+                            data.peptides.add(peptide);
+                        }
+                    }
+                });
+                
+                updateUI();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('itemList').innerHTML = '<div class="error">Error loading data. Please check file paths.</div>';
+            }
+        }
+        
+        // Update UI
+        function updateUI() {
+            updateItemList();
+            if (state.selectedNode) {
+                drawNetwork();
+            }
+        }
+        
+        // Update item list
+        function updateItemList() {
+            const listContainer = document.getElementById('itemList');
+            const items = state.currentTab === 'peptides' ? Array.from(data.peptides) : Array.from(data.receptors);
+            
+            const filtered = items.filter(item => 
+                item.toLowerCase().includes(state.searchQuery.toLowerCase())
+            );
+            
+            const itemsWithCounts = filtered.map(item => {
+                const connections = data.interactions.filter(i => 
+                    i.iptm >= state.iptmThreshold && 
+                    (state.currentTab === 'peptides' ? i.peptide === item : i.receptor === item)
+                );
+                return { name: item, count: connections.length };
+            }).sort((a, b) => b.count - a.count);
+            
+            listContainer.innerHTML = itemsWithCounts.map(item => `
+                <div class="item ${state.selectedNode === item.name ? 'selected' : ''}" onclick="selectNode('${item.name}')">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-meta">${item.count} connection${item.count !== 1 ? 's' : ''} at iPTM ≥ ${state.iptmThreshold.toFixed(2)}</div>
+                </div>
+            `).join('');
+        }
+        
+        // Select node
+        function selectNode(name) {
+            state.selectedNode = name;
+            updateItemList();
+            drawNetwork();
+        }
+        
+        // Draw network
+        function drawNetwork() {
+            const container = document.getElementById('network');
+            container.querySelector('svg')?.remove();
+            
+            if (!state.selectedNode) return;
+            
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Filter interactions
+            const connections = data.interactions.filter(i => 
+                i.iptm >= state.iptmThreshold && 
+                (state.currentTab === 'peptides' ? i.peptide === state.selectedNode : i.receptor === state.selectedNode)
+            );
+            
+            if (connections.length === 0) {
+                const svg = d3.select('#network').append('svg')
+                    .attr('width', width)
+                    .attr('height', height);
+                svg.append('text')
+                    .attr('x', width / 2)
+                    .attr('y', height / 2)
+                    .attr('text-anchor', 'middle')
+                    .style('fill', '#999')
+                    .text('No connections at current iPTM threshold');
+                return;
+            }
+            
+            // Create nodes
+            const nodes = [];
+            const links = [];
+            
+            // Add selected node
+            nodes.push({
+                id: state.selectedNode,
+                type: state.currentTab === 'peptides' ? 'peptide' : 'receptor',
+                x: width * 0.25,
+                y: height / 2
+            });
+            
+            // Add connected nodes
+            const connectedNodes = state.currentTab === 'peptides' 
+                ? connections.map(c => c.receptor)
+                : connections.map(c => c.peptide);
+            
+            const uniqueConnected = [...new Set(connectedNodes)];
+            const spacing = Math.min(80, (height - 100) / uniqueConnected.length);
+            const startY = (height - (uniqueConnected.length - 1) * spacing) / 2;
+            
+            uniqueConnected.forEach((node, i) => {
+                nodes.push({
+                    id: node,
+                    type: state.currentTab === 'peptides' ? 'receptor' : 'peptide',
+                    x: width * 0.75,
+                    y: startY + i * spacing
+                });
+                
+                const interaction = connections.find(c => 
+                    (state.currentTab === 'peptides' ? c.receptor === node : c.peptide === node)
+                );
+                
+                links.push({
+                    source: state.selectedNode,
+                    target: node,
+                    interaction: interaction
+                });
+            });
+            
+            // Draw
+            const svg = d3.select('#network').append('svg')
+                .attr('width', width)
+                .attr('height', height);
+            
+            // Draw links
+            svg.selectAll('line')
+                .data(links)
+                .enter()
+                .append('line')
+                .attr('x1', d => nodes.find(n => n.id === d.source).x)
+                .attr('y1', d => nodes.find(n => n.id === d.source).y)
+                .attr('x2', d => nodes.find(n => n.id === d.target).x)
+                .attr('y2', d => nodes.find(n => n.id === d.target).y)
+                .attr('stroke', '#999')
+                .attr('stroke-width', 2)
+                .style('cursor', 'pointer')
+                .on('click', (event, d) => showDetails(d.interaction));
+            
+            // Draw nodes
+            const nodeGroups = svg.selectAll('g')
+                .data(nodes)
+                .enter()
+                .append('g')
+                .attr('transform', d => `translate(${d.x},${d.y})`);
+            
+            nodeGroups.each(function(d) {
+                const g = d3.select(this);
+                
+                if (d.type === 'peptide') {
+                    g.append('circle')
+                        .attr('r', 15)
+                        .attr('fill', colors.peptide)
+                        .attr('stroke', '#fff')
+                        .attr('stroke-width', 2);
+                } else {
+                    const metadata = data.receptorMetadata[d.id] || {};
+                    const color = colors[metadata.therapeuticInterest] || colors.No;
+                    const gpcrClass = metadata.class || 'A';
+                    
+                    if (gpcrClass === 'A') {
+                        g.append('circle')
+                            .attr('r', 15)
+                            .attr('fill', color)
+                            .attr('stroke', '#fff')
+                            .attr('stroke-width', 2);
+                    } else if (gpcrClass === 'B1') {
+                        g.append('rect')
+                            .attr('x', -15)
+                            .attr('y', -15)
+                            .attr('width', 30)
+                            .attr('height', 30)
+                            .attr('fill', color)
+                            .attr('stroke', '#fff')
+                            .attr('stroke-width', 2);
+                    } else {
+                        g.append('polygon')
+                            .attr('points', '0,-17 15,17 -15,17')
+                            .attr('fill', color)
+                            .attr('stroke', '#fff')
+                            .attr('stroke-width', 2);
+                    }
+                }
+                
+                g.append('text')
+                    .attr('y', 35)
+                    .attr('text-anchor', 'middle')
+                    .style('font-size', '11px')
+                    .style('font-weight', '500')
+                    .text(d.id);
+            });
+        }
+        
+        // Show details modal
+        async function showDetails(interaction) {
+            const modal = document.getElementById('detailModal');
+            const title = document.getElementById('modalTitle');
+            const residuesContent = document.getElementById('residuesContent');
+            
+            title.textContent = `${interaction.peptide} ↔ ${interaction.receptor}`;
+            modal.classList.add('active');
+            
+            // Load PDB
+            const viewer = $3Dmol.createViewer('viewer', {
+                backgroundColor: 'white'
+            });
+            
+            try {
+                const pdbRes = await fetch(`PDBs/${interaction.name}.pdb`);
+                const pdbText = await pdbRes.text();
+                viewer.addModel(pdbText, 'pdb');
+                viewer.setStyle({}, {cartoon: {color: 'spectrum'}});
+                viewer.zoomTo();
+                viewer.render();
+            } catch (error) {
+                console.error('Error loading PDB:', error);
+                document.getElementById('viewer').innerHTML = '<div class="error">Error loading PDB file</div>';
+            }
+            
+            // Load residues
+            try {
+                const residuesRes = await fetch(`residues/${interaction.name}.txt`);
+                const residuesText = await residuesRes.text();
+                residuesContent.textContent = residuesText;
+            } catch (error) {
+                console.error('Error loading residues:', error);
+                residuesContent.textContent = 'Error loading residues file';
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+        
+        // Event listeners
+        document.getElementById('iptmSlider').addEventListener('input', (e) => {
+            state.iptmThreshold = parseFloat(e.target.value);
+            document.getElementById('iptmValue').textContent = state.iptmThreshold.toFixed(2);
+            updateUI();
+        });
+        
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                state.currentTab = tab.dataset.tab;
+                state.selectedNode = null;
+                updateUI();
+            });
+        });
+        
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            state.searchQuery = e.target.value;
+            updateItemList();
+        });
+        
+        // Close modal on background click
+        document.getElementById('detailModal').addEventListener('click', (e) => {
+            if (e.target.id === 'detailModal') {
+                closeModal();
+            }
+        });
+        
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>
