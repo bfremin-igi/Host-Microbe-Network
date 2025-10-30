@@ -385,6 +385,7 @@
         let data = {
             interactions: [],
             receptorMetadata: {},
+            peptideMetadata: {},
             peptides: new Set(),
             receptors: new Set()
         };
@@ -420,6 +421,46 @@
                             notes: parts[3] || ''
                         };
                         data.receptors.add(parts[0]);
+                    }
+                });
+                
+                // Load peptide metadata
+                const peptideMetadataRes = await fetch('peptide_metadata.txt');
+                const peptideMetadataText = await peptideMetadataRes.text();
+                const peptideMetadataLines = peptideMetadataText.split('\n');
+                
+                peptideMetadataLines.forEach(line => {
+                    const parts = line.trim().split(/\s+/);
+                    if (parts.length >= 3) {
+                        const peptideId = parts[0];
+                        const ecosystems = parts[1].split(',');
+                        const taxa = parts[2];
+                        
+                        // Parse taxa to extract readable components
+                        const taxaLevels = taxa.split(';').reduce((acc, level) => {
+                            const match = level.match(/([a-z])__(.+)/);
+                            if (match) {
+                                const levelMap = {
+                                    'd': 'Domain',
+                                    'p': 'Phylum',
+                                    'c': 'Class',
+                                    'o': 'Order',
+                                    'f': 'Family',
+                                    'g': 'Genus',
+                                    's': 'Species'
+                                };
+                                acc[levelMap[match[1]] || match[1]] = match[2].replace(/_/g, ' ');
+                            }
+                            return acc;
+                        }, {});
+                        
+                        data.peptideMetadata[peptideId] = {
+                            ecosystems: ecosystems,
+                            taxa: taxa,
+                            taxaLevels: taxaLevels,
+                            // Create searchable text
+                            searchText: `${peptideId} ${ecosystems.join(' ')} ${Object.values(taxaLevels).join(' ')}`.toLowerCase()
+                        };
                     }
                 });
                 
@@ -471,6 +512,12 @@
                 // Search by name
                 if (item.toLowerCase().includes(query)) return true;
                 
+                // For peptides, search metadata
+                if (state.currentTab === 'peptides') {
+                    const metadata = data.peptideMetadata[item];
+                    if (metadata && metadata.searchText.includes(query)) return true;
+                }
+                
                 // For receptors, also search metadata
                 if (state.currentTab === 'receptors') {
                     const metadata = data.receptorMetadata[item];
@@ -488,12 +535,30 @@
                     i.iptm >= state.iptmThreshold && 
                     (state.currentTab === 'peptides' ? i.peptide === item : i.receptor === item)
                 );
-                return { name: item, count: connections.length };
+                
+                let metaInfo = '';
+                if (state.currentTab === 'peptides') {
+                    const metadata = data.peptideMetadata[item];
+                    if (metadata) {
+                        // Show primary ecosystem and highest taxonomic level available
+                        const primaryEcosystem = metadata.ecosystems[0].replace(/_/g, ' ');
+                        const taxaKeys = Object.keys(metadata.taxaLevels);
+                        const highestTaxa = taxaKeys.length > 0 ? 
+                            metadata.taxaLevels[taxaKeys[taxaKeys.length - 1]] : 'Unknown';
+                        metaInfo = `${primaryEcosystem} | ${highestTaxa}`;
+                        if (metadata.ecosystems.length > 1) {
+                            metaInfo += ` (+${metadata.ecosystems.length - 1} more)`;
+                        }
+                    }
+                }
+                
+                return { name: item, count: connections.length, meta: metaInfo };
             }).sort((a, b) => b.count - a.count);
             
             listContainer.innerHTML = itemsWithCounts.map(item => `
                 <div class="item ${state.selectedNode === item.name ? 'selected' : ''}" onclick="selectNode('${item.name}')">
                     <div class="item-name">${item.name}</div>
+                    ${item.meta ? `<div class="item-meta" style="margin-bottom: 4px;">${item.meta}</div>` : ''}
                     <div class="item-meta">${item.count} connection${item.count !== 1 ? 's' : ''} at iPTM ≥ ${state.iptmThreshold.toFixed(2)}</div>
                 </div>
             `).join('');
@@ -613,7 +678,8 @@
                         .attr('fill', colors.peptide)
                         .attr('stroke', '#fff')
                         .attr('stroke-width', 2)
-                        .style('cursor', 'pointer');
+                        .style('cursor', 'pointer')
+                        .on('click', () => showPeptideMetadata(d.id));
                 } else {
                     const metadata = data.receptorMetadata[d.id] || {};
                     const color = colors[metadata.therapeuticInterest] || colors.No;
@@ -713,6 +779,63 @@
                 console.error('Error loading residues:', error);
                 residuesContent.textContent = 'Error loading residues file';
             }
+        }
+        
+        // Show peptide metadata modal
+        function showPeptideMetadata(peptideId) {
+            const metadata = data.peptideMetadata[peptideId];
+            if (!metadata) return;
+            
+            const modal = document.getElementById('detailModal');
+            const title = document.getElementById('modalTitle');
+            const viewerDiv = document.getElementById('viewer');
+            const residuesContent = document.getElementById('residuesContent');
+            
+            title.textContent = `Peptide: ${peptideId}`;
+            modal.classList.add('active');
+            
+            // Show metadata
+            const taxaHTML = Object.entries(metadata.taxaLevels)
+                .map(([level, value]) => `<div><strong>${level}:</strong> <em>${value}</em></div>`)
+                .join('');
+            
+            viewerDiv.innerHTML = `
+                <div style="padding: 20px; background: #f8f8f8; border-radius: 8px;">
+                    <h3 style="margin-bottom: 15px; color: #667eea;">Peptide Metadata</h3>
+                    <div style="display: grid; gap: 15px;">
+                        <div>
+                            <strong>Peptide ID:</strong> ${peptideId}
+                        </div>
+                        <div>
+                            <strong>Ecosystems:</strong><br>
+                            <div style="margin-top: 5px;">
+                                ${metadata.ecosystems.map(eco => 
+                                    `<span style="display: inline-block; background: #667eea; color: white; padding: 4px 8px; border-radius: 4px; margin: 2px; font-size: 11px;">${eco.replace(/_/g, ' ')}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                        <div>
+                            <strong>Taxonomy:</strong>
+                            <div style="margin-top: 5px; padding-left: 10px;">
+                                ${taxaHTML}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show connection info
+            const connections = data.interactions.filter(i => 
+                i.peptide === peptideId && i.iptm >= state.iptmThreshold
+            );
+            
+            // Change the section title
+            document.querySelector('.residues-section h3').textContent = 'Receptors Bound';
+            
+            residuesContent.innerHTML = `
+                <strong>Connections at iPTM ≥ ${state.iptmThreshold.toFixed(2)}:</strong><br><br>
+                ${connections.map(c => `${c.receptor} (iPTM: ${c.iptm.toFixed(3)}, pLDDT: ${c.plddt.toFixed(1)})`).join('<br>')}
+            `;
         }
         
         // Show receptor metadata modal
