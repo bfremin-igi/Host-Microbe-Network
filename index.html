@@ -700,30 +700,7 @@
             <div class="stats-bar" id="statsBar" style="display:none;"></div>
         </div>
 
-        <div class="legend">
-            <div class="legend-title">Legend</div>
-            <div class="legend-section">
-                <div class="legend-section-label">Therapeutic interest</div>
-                <div class="legend-row"><div class="legend-dot" style="background:#3ecf8e;"></div>Yes</div>
-                <div class="legend-row"><div class="legend-dot" style="background:#f0a044;"></div>Maybe</div>
-                <div class="legend-row"><div class="legend-dot" style="background:#4a4f62;"></div>No / Unknown</div>
-            </div>
-            <div class="legend-section">
-                <div class="legend-section-label">GPCR class</div>
-                <div class="legend-row">
-                    <svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#4a4f62"/></svg>
-                    Class A
-                </div>
-                <div class="legend-row">
-                    <svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#4a4f62"/></svg>
-                    Class B1
-                </div>
-                <div class="legend-row">
-                    <svg width="12" height="12"><polygon points="6,1 11,11 1,11" fill="#4a4f62"/></svg>
-                    Class B2 / Other
-                </div>
-            </div>
-        </div>
+        <div class="legend" id="legend"></div>
 
         <div class="tooltip" id="tooltip"></div>
     </div>
@@ -777,6 +754,68 @@
         Unknown: '#4a4f62',
         peptide: '#6c8dff'
     };
+
+    // Phylum color palette — distinct, legible on dark bg
+    const PHYLUM_COLORS = [
+        '#6c8dff', // blue-violet
+        '#3ecf8e', // green
+        '#f0a044', // amber
+        '#e05c8a', // pink
+        '#5ecbf0', // cyan
+        '#b67aff', // purple
+        '#f06c4a', // coral
+        '#a0d050', // lime
+        '#f0d044', // yellow
+        '#50c8c0', // teal
+        '#ff8c6c', // peach
+        '#9090c0', // slate
+    ];
+    const phylumColorMap = {}; // populated lazily per draw
+
+    function getPhylumColor(phylum) {
+        if (!phylum) return '#4a4f62';
+        if (!phylumColorMap[phylum]) {
+            const idx = Object.keys(phylumColorMap).length % PHYLUM_COLORS.length;
+            phylumColorMap[phylum] = PHYLUM_COLORS[idx];
+        }
+        return phylumColorMap[phylum];
+    }
+
+    function getPeptidePhylum(peptideId) {
+        const m = data.peptideMetadata[peptideId];
+        return m?.taxaLevels?.Phylum || null;
+    }
+
+    /* ── LEGEND ──────────────────────────────────────── */
+    function updateLegend(visiblePhyla) {
+        const el = document.getElementById('legend');
+        if (state.currentTab === 'peptides') {
+            el.innerHTML = `
+                <div class="legend-title">Legend</div>
+                <div class="legend-section">
+                    <div class="legend-section-label">Therapeutic interest</div>
+                    <div class="legend-row"><div class="legend-dot" style="background:#3ecf8e;"></div>Yes</div>
+                    <div class="legend-row"><div class="legend-dot" style="background:#f0a044;"></div>Maybe</div>
+                    <div class="legend-row"><div class="legend-dot" style="background:#4a4f62;"></div>No / Unknown</div>
+                </div>
+                <div class="legend-section">
+                    <div class="legend-section-label">GPCR class</div>
+                    <div class="legend-row"><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#4a4f62"/></svg>Class A</div>
+                    <div class="legend-row"><svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#4a4f62"/></svg>Class B1</div>
+                    <div class="legend-row"><svg width="12" height="12"><polygon points="6,1 11,11 1,11" fill="#4a4f62"/></svg>Class B2 / Other</div>
+                </div>`;
+        } else {
+            const phylaRows = (visiblePhyla || []).map(p =>
+                `<div class="legend-row"><div class="legend-dot" style="background:${getPhylumColor(p)};"></div><span style="font-size:11px;">${p}</span></div>`
+            ).join('');
+            el.innerHTML = `
+                <div class="legend-title">Legend</div>
+                <div class="legend-section">
+                    <div class="legend-section-label">Phylum</div>
+                    ${phylaRows || '<div class="legend-row" style="color:#4a4f62;font-size:11px;">No phylum data</div>'}
+                </div>`;
+        }
+    }
 
     /* ── DATA LOADING ───────────────────────────────── */
     async function loadData() {
@@ -843,6 +882,7 @@
     function updateUI() {
         updateItemList();
         if (state.selectedNode) drawNetwork();
+        else updateLegend([]);
     }
 
     function updateItemList() {
@@ -992,6 +1032,7 @@
 
         // Draw right nodes
         const rightGroup = svg.append('g');
+        const visiblePhyla = [];
         connectedSet.forEach((node, i) => {
             const targetY = n === 1 ? centerY : startY + i * spacing;
             const interaction = connections.find(c =>
@@ -999,9 +1040,14 @@
             );
             const isReceptor = state.currentTab === 'peptides';
             const metadata = isReceptor ? (data.receptorMetadata[node] || {}) : {};
-            const color = isReceptor
-                ? (nodeColors[metadata.therapeuticInterest] || nodeColors.Unknown)
-                : nodeColors.peptide;
+            let color;
+            if (isReceptor) {
+                color = nodeColors[metadata.therapeuticInterest] || nodeColors.Unknown;
+            } else {
+                const phylum = getPeptidePhylum(node);
+                color = getPhylumColor(phylum);
+                if (phylum && !visiblePhyla.includes(phylum)) visiblePhyla.push(phylum);
+            }
             const gpcrClass = metadata.class || 'A';
 
             const g = rightGroup.append('g')
@@ -1009,9 +1055,10 @@
                 .style('cursor', 'pointer')
                 .on('click', () => isReceptor ? showReceptorMetadata(node) : showPeptideMetadata(node))
                 .on('mousemove', (event) => {
+                    const phylum = !isReceptor ? getPeptidePhylum(node) : null;
                     const tip = isReceptor
                         ? `<div class="tooltip-title">${node}</div><div class="tooltip-row"><span>Class</span><span class="tooltip-val">${gpcrClass}</span></div><div class="tooltip-row"><span>Interest</span><span class="tooltip-val">${metadata.therapeuticInterest || 'Unknown'}</span></div><div class="tooltip-row"><span>iPTM</span><span class="tooltip-val">${interaction.iptm.toFixed(3)}</span></div>`
-                        : `<div class="tooltip-title">${node}</div><div class="tooltip-row"><span>iPTM</span><span class="tooltip-val">${interaction.iptm.toFixed(3)}</span></div>`;
+                        : `<div class="tooltip-title">${node}</div>${phylum ? `<div class="tooltip-row"><span>Phylum</span><span class="tooltip-val">${phylum}</span></div>` : ''}<div class="tooltip-row"><span>iPTM</span><span class="tooltip-val">${interaction.iptm.toFixed(3)}</span></div>`;
                     showTooltipRaw(event, tip);
                 })
                 .on('mouseleave', hideTooltip);
@@ -1064,6 +1111,9 @@
             .attr('class', 'node-label')
             .attr('text-anchor', labelAlign)
             .text(state.selectedNode.length > 18 ? state.selectedNode.slice(0, 16) + '…' : state.selectedNode);
+
+        // Update legend for current mode
+        updateLegend(visiblePhyla.sort());
     }
 
     /* ── TOOLTIP ─────────────────────────────────────── */
